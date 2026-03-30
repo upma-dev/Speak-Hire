@@ -1,4 +1,4 @@
-import { deductCredit } from "@/lib/credits";
+import { deductCredit } from "@/lib/credit";
 
 export async function POST(req) {
   const { userId } = await req.json();
