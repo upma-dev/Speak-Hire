@@ -1,6 +1,6 @@
-"use Client";
+"use client";
 import { UserDetailContext } from "@/context/UserDetailContext";
-import { supabase } from "@/services/supabaseClient";
+import { supabase } from "@/lib/supabase/client";
 import React, { useContext, useEffect, useState } from "react";
 
 function Provider({ children }) {
@@ -9,32 +9,6 @@ function Provider({ children }) {
 
   useEffect(() => {
     CreateNewUser();
-
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        try {
-          await fetch("/api/auth", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ event, session }),
-          });
-        } catch (err) {
-          console.error("auth state sync error:", err);
-        }
-
-        if (session?.user) {
-          await CreateNewUser();
-        } else {
-          setUser(null);
-        }
-      },
-    );
-
-    return () => {
-      authListener?.subscription?.unsubscribe?.();
-    };
   }, []);
 
   // Commented out old code
@@ -78,25 +52,10 @@ function Provider({ children }) {
   // };
 
   const getCurrentUser = async () => {
-    try {
-      const {
-        data: { session },
-        error: sessionError,
-      } = await supabase.auth.getSession();
-
-      if (sessionError) {
-        // AuthSessionMissingError is normal for unauthenticated visitors, ignore
-        if (sessionError.name !== "AuthSessionMissingError") {
-          console.error("Supabase session error:", sessionError);
-        }
-        return null;
-      }
-
-      return session?.user ?? null;
-    } catch (err) {
-      console.error("Error checking auth session:", err);
-      return null;
-    }
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    return session?.user ?? null;
   };
 
   const CreateNewUser = async () => {

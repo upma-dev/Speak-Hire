@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, User, X } from "lucide-react";
 import { useState } from "react";
-import { supabase } from "@/services/supabaseClient";
+import { supabase } from "@/lib/supabase/client";
 
 export default function AuthModal({ isOpen, onClose, showToast }) {
   const [isLogin, setIsLogin] = useState(true);

@@ -72,15 +72,10 @@ Interview Duration: {{duration}}
 
 Interview Type: {{type}}
 
-Difficulty Level: {{difficulty}}
-
 Your task:
 
 Analyze the job description to identify key responsibilities, required skills, and expected experience.
-Generate a list of interview questions depends on interview duration and difficulty level.
-- Easy: Basic questions about fundamentals and simple concepts
-- Medium: Questions requiring some experience and problem-solving
-- Hard: Advanced questions testing deep expertise and complex scenarios
+Generate a list of interview questions depends on interview duration.
 Adjust the number and depth of questions to match the interview duration.
 Ensure the questions match the tone and structure of a real-life {{type}} interview.
 
@@ -94,7 +89,7 @@ Format:
   }
 ]
 
-The goal is to create a structured, relevant, and time-optimized interview plan for a {{jobTitle}} role at {{difficulty}} difficulty level.`;
+The goal is to create a structured, relevant, and time-optimized interview plan for a {{jobTitle}} role.`;
 
 export const FEEDBACK_PROMPT = `{{conversation}}
 Depends on this Interview Conversation betweeen assistant and user, Give me feedback for user interview.Give me rating out of 10 for technical Skills, Communication,Problem Solving,Experience.Also give me summary in 3 lines about the interview and one line to let me know whether is recommended for hire or not with msg.Give me response in JSON format{

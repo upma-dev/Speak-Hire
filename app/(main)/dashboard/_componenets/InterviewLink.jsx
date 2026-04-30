@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,7 +17,17 @@ import Link from "next/link";
 import { toast } from "sonner";
 
 function InterviewLink({ interviewId, formData }) {
-  const url = process.env.NEXT_PUBLIC_HOST_URL + "/" + interviewId;
+  const [hostUrl, setHostUrl] = useState(
+    process.env.NEXT_PUBLIC_HOST_URL || "http://localhost:3000",
+  );
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setHostUrl(window.location.origin);
+    }
+  }, []);
+
+  const url = `${hostUrl}/interview/${interviewId}`;
 
   const GetInterviewUrl = () => {
     return url;

@@ -40,18 +40,12 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  // Handle auth state change notifications from client
-  // This is called when Supabase auth state changes on the client side
   try {
     const { event, session } = await request.json();
-
-    // For now, just acknowledge the request
-    // The client-side auth is handled by Supabase client
-    // This endpoint could be used for server-side session management if needed
-
+    // Handle auth state change notifications
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Auth POST error:", error);
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    console.error("Auth state POST error:", error);
+    return NextResponse.json({ success: true });
   }
 }

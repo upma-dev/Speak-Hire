@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import ClientProviders from "./client-providers";
+
 import { InterviewDataProvider } from "@/context/InterviewDataContext";
 import { Toaster } from "@/components/ui/sonner";
 

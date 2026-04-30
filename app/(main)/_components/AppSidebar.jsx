@@ -17,7 +17,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSidebarState } from "@/context/SidebarContext";
 import { useUser } from "@/app/provider";
 import { useState, useEffect } from "react";
-import { supabase } from "@/services/supabaseClient";
+import { supabase } from "@/lib/supabase/client";
 import { toast } from "sonner"; // ✅ correct import
 
 export function AppSidebar() {

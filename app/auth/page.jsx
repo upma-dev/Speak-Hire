@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, User, X } from "lucide-react";
-import { supabase } from "@/services/supabaseClient";
+import { supabaseAuth } from "@/lib/supabase/auth";
 import { useRouter } from "next/navigation";
-import toast, { Toaster } from "react-hot-toast";
+import { toast } from "sonner";
 
 export default function AuthPage() {
   const router = useRouter();
@@ -29,20 +30,26 @@ export default function AuthPage() {
     try {
       if (isLogin) {
         // ✅ LOGIN
-        const { error } = await supabase.auth.signInWithPassword({
+        const { error } = await supabaseAuth.auth.signInWithPassword({
           email,
           password,
         });
 
         if (error) {
-          toast.error("Invalid email or password ❌");
+          if (error.message.includes("Invalid login credentials")) {
+            toast.error(
+              "Invalid password for this email. Use forgot password to reset.",
+            );
+          } else {
+            toast.error(error.message || "Invalid email or password");
+          }
         } else {
           toast.success("Welcome back 🎉");
           window.location.href = "/dashboard";
         }
       } else {
         // ✅ SIGNUP
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error } = await supabaseAuth.auth.signUp({
           email,
           password,
           options: {
@@ -56,7 +63,7 @@ export default function AuthPage() {
         } else {
           // ✅ INSERT INTO USERS TABLE
           if (data?.user) {
-            await supabase.from("Users").upsert(
+            await supabaseAuth.from("Users").upsert(
               {
                 email: data.user.email,
                 name: fullName,
@@ -78,7 +85,7 @@ export default function AuthPage() {
   };
 
   const signInWithGoogle = async () => {
-    await supabase.auth.signInWithOAuth({
+    await supabaseAuth.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
@@ -107,9 +114,6 @@ export default function AuthPage() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0B0F19]">
-      {/* 🔥 TOASTER */}
-      <Toaster position="top-right" reverseOrder={false} />
-
       {/* ❌ CLOSE BUTTON */}
       <button
         onClick={() => router.push("/")}
@@ -185,6 +189,15 @@ export default function AuthPage() {
           >
             {loading ? "Please wait..." : isLogin ? "Login" : "Sign Up"}
           </button>
+
+          {isLogin && (
+            <Link
+              href="/auth/forgot-password"
+              className="block w-full text-center text-sm text-blue-400 hover:text-blue-300 mt-3 font-medium"
+            >
+              Forgot Password?
+            </Link>
+          )}
         </form>
 
         {/* DIVIDER */}

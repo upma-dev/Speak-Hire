@@ -37,16 +37,14 @@ Missed subtle cues       →   ML-powered insights
 Hours of review          →   Instant candidate ranking
 ```
 
+## 🚀 **Live Demo** 
+🌐 **[https://speak-hire.vercel.app/](https://speak-hire.vercel.app/)** *(Production Live!)*
+
 ## 🔥 **Live Demo Features**
 
 | Feature | Status | Cool Factor |
 |---------|--------|-------------|
-| 👁️ **Eye Contact Tracking** | ✅ Live | MediaPipe ML |
-| 🗣️ **Voice AI Interviewer** | ✅ Live | Vapi.ai |
-| 📊 **Real-time Analytics** | ✅ Live | Custom dashboard |
-| 💳 **Stripe + Razorpay** | ✅ Live | Pro credits |
-| 📱 **Mobile Responsive** | ✅ Live | Perfect UX |
-| ⚡ **Loading Skeletons** | ✅ New | Smooth experience |
+| 👁️ **Eye Contact Tracking** | ✅
 
 ## 🛠️ **One-Click Setup** (Normal User Friendly)
 
@@ -183,7 +181,7 @@ git push && gh pr create
 ⭐ **Star this repo**    
 💬 **Issues/PRs welcome**
 
-**Built with ❤️ by upma-devy**
+**Built with ❤️ by upma-dev**
 
 ---
 

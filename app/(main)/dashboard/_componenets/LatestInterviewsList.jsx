@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/services/supabaseClient";
+import { supabase } from "@/lib/supabase/client";
 import InterviewCard from "./InterviewCard";
 import { Video } from "lucide-react";
 
