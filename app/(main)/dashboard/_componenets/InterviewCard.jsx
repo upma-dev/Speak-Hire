@@ -7,7 +7,10 @@ import { useRouter } from "next/navigation";
 
 export default function InterviewCard({ interview, viewDetail = false }) {
   const router = useRouter();
-  const url = process.env.NEXT_PUBLIC_HOST_URL + "/" + interview?.interview_id;
+  const hostUrl =
+    process.env.NEXT_PUBLIC_HOST_URL ||
+    (typeof window !== "undefined" ? window.location.origin : "");
+  const url = `${hostUrl}/interview/${interview?.interview_id}`;
 
   const copy = () => {
     navigator.clipboard.writeText(url);
