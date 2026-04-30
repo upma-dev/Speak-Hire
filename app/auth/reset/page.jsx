@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -35,9 +36,8 @@ export default function ResetPassword() {
         return;
       }
 
-      const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(
-        code,
-      );
+      const { error: exchangeError } =
+        await supabase.auth.exchangeCodeForSession(code);
 
       if (exchangeError) {
         console.error("Exchange code error:", exchangeError);
