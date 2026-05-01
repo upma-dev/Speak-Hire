@@ -3,14 +3,12 @@ import { NextResponse } from "next/server";
 import { QUESTIONS_PROMPT } from "@/services/Constants";
 
 export async function POST(req) {
-  const { jobPosition, jobDescription, type, duration, difficulty } =
-    await req.json();
+  const { jobPosition, jobDescription, type, duration } = await req.json();
 
   const FINAL_PROMPT = QUESTIONS_PROMPT.replace("{{jobTitle}}", jobPosition)
     .replace("{{jobDescription}}", jobDescription)
     .replace("{{type}}", type.join(", "))
-    .replace("{{duration}}", duration)
-    .replace("{{difficulty}}", difficulty || "Medium");
+    .replace("{{duration}}", duration);
 
   console.log(FINAL_PROMPT);
 

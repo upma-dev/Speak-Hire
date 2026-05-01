@@ -118,6 +118,7 @@ function CreateInterview() {
       ) : step === 2 ? (
         <QuestionList
           formData={formData}
+          userEmail={user?.email}
           onCreateLink={(interview_id) => onCreateLink(interview_id)}
         />
       ) : (

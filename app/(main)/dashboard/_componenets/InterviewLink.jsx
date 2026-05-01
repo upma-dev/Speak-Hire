@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import {
   ArrowLeft,
@@ -36,6 +35,14 @@ function InterviewLink({ interviewId, formData }) {
   const onCopyLink = async () => {
     await navigator.clipboard.writeText(url);
     toast.success("Link Copied to Clipboard");
+  };
+
+  const shareByEmail = () => {
+    window.location.href = `mailto:?subject=${encodeURIComponent("Interview Link")}&body=${encodeURIComponent(url)}`;
+  };
+
+  const shareByWhatsApp = () => {
+    window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, "_blank");
   };
 
   // Helper function to safely display type
@@ -144,14 +151,15 @@ function InterviewLink({ interviewId, formData }) {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Button
             variant="outline"
-            className="border-white/10 hover:bg-white/10 hover:border-white/20 text-gray-300"
+            onClick={shareByEmail}
+            className="border-blue-400/50 bg-blue-500/10 text-blue-100 hover:bg-blue-500/20 hover:text-white"
           >
             <Mail className="w-4 h-4 mr-2" />
             Email
           </Button>
           <Button
             variant="outline"
-            className="border-white/10 hover:bg-white/10 hover:border-white/20 text-gray-300"
+            className="border-violet-400/50 bg-violet-500/10 text-violet-100 hover:bg-violet-500/20 hover:text-white"
           >
             <svg
               className="w-4 h-4 mr-2"
@@ -164,7 +172,8 @@ function InterviewLink({ interviewId, formData }) {
           </Button>
           <Button
             variant="outline"
-            className="border-white/10 hover:bg-white/10 hover:border-white/20 text-gray-300"
+            onClick={shareByWhatsApp}
+            className="border-emerald-400/50 bg-emerald-500/10 text-emerald-100 hover:bg-emerald-500/20 hover:text-white"
           >
             <svg
               className="w-4 h-4 mr-2"
@@ -183,7 +192,7 @@ function InterviewLink({ interviewId, formData }) {
         <Link href="/dashboard" className="flex-1">
           <Button
             variant="outline"
-            className="w-full border-white/20 hover:bg-white/10 text-gray-300 h-12"
+            className="w-full border-white/20 hover:bg-white/10 text-gray-800 h-12"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard

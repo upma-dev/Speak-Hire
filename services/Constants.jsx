@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   List,
   Puzzle,
+  Share2,
   Settings,
   User2Icon,
   WalletCards,
@@ -25,6 +26,11 @@ export const SideBarOptions = [
     name: "All Interview",
     icon: List,
     path: "/all-interview",
+  },
+  {
+    name: "Share Experience",
+    icon: Share2,
+    path: "/interview-experience",
   },
   {
     name: "Billing",

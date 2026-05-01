@@ -71,14 +71,23 @@ function FormContainer({ onHandleInputChange, GoToNext, errors }) {
           onValueChange={(value) => onHandleInputChange("duration", value)}
         >
           <SelectTrigger
-            className={`mt-2 bg-white/5 text-white ${
+            className={`w-full mt-2 bg-white/5 text-white ${
               errors?.duration ? "border-red-500" : "border-white/10"
             }`}
           >
             <SelectValue placeholder="Select Duration" />
           </SelectTrigger>
 
-          <SelectContent>
+          <SelectContent
+            className="z-50 
+  w-[--radix-select-trigger-width] 
+  bg-slate-900/95 
+  backdrop-blur-xl 
+  border border-white/10 
+  shadow-2xl 
+  rounded-xl
+"
+          >
             <SelectItem value="15 Min">15 Minutes</SelectItem>
             <SelectItem value="30 Min">30 Minutes</SelectItem>
             <SelectItem value="45 Min">45 Minutes</SelectItem>

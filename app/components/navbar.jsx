@@ -43,6 +43,13 @@ export default function Navbar() {
               How it works
             </a>
 
+            <a
+              href="#interview-experience"
+              className="hover:text-white transition"
+            >
+              Interview Experience
+            </a>
+
             {/* CONTACT DROPDOWN */}
             <div className="relative" ref={contactRef}>
               <button
@@ -58,10 +65,10 @@ export default function Navbar() {
 
                   <p className="text-sm text-white font-medium">Upma Mishra</p>
 
-                  <p className="text-sm text-gray-300">📞 7354126134</p>
+                  <p className="text-sm text-gray-300">📞upma7354@gmail.com</p>
 
                   <a
-                    href="https://linktree-upma.vercel.app/"
+                    href=""
                     target="_blank"
                     className="text-blue-400 text-sm mt-2 inline-block hover:underline"
                   >
@@ -106,6 +113,16 @@ export default function Navbar() {
             <a href="#how" className="block">
               How it works
             </a>
+
+            <button
+              onClick={() => {
+                router.push("/interview-experience");
+                setMobile(false);
+              }}
+              className="block text-left w-full"
+            >
+              Interview Experience
+            </button>
 
             <div className="border-t border-white/10 pt-3 text-sm">
               <p className="text-gray-400 text-xs mb-1">Contact</p>

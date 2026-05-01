@@ -62,12 +62,12 @@ export default function Footer() {
             <p className="hover:text-white transition">Upma Mishra</p>
 
             <p className="flex items-center gap-2 hover:text-white transition">
-              📞 <span>7354126134</span>
+              📞 <span>upma7354@gmail.com</span>
             </p>
 
             {/* ✅ Portfolio opens in new tab */}
             <a
-              href="https://linktree-upma.vercel.app/"
+              href=""
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:text-blue-300 transition hover:underline"

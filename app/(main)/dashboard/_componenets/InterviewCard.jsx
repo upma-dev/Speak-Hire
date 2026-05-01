@@ -10,19 +10,42 @@ export default function InterviewCard({ interview, viewDetail = false }) {
   const hostUrl =
     process.env.NEXT_PUBLIC_HOST_URL ||
     (typeof window !== "undefined" ? window.location.origin : "");
-  const url = `${hostUrl}/interview/${interview?.interview_id}`;
+
+  // Clean interview_id - remove leading "interview/" if present
+  const rawId = interview?.interview_id || "";
+  const cleanId = rawId.replace(/^interview\//i, "").trim();
+  const url = cleanId ? `${hostUrl}/interview/${cleanId}` : "";
 
   const copy = () => {
+    if (!cleanId) {
+      toast.error("Invalid interview ID");
+      return;
+    }
     navigator.clipboard.writeText(url);
     toast("Link copied");
   };
 
   const send = () => {
+    if (!cleanId) {
+      toast.error("Invalid interview ID");
+      return;
+    }
     window.location.href = "mailto:?subject=Interview Link&body=" + url;
   };
 
   const viewDetails = () => {
     router.push(`/scheduled-interview/${interview?.interview_id}/details`);
+  };
+
+  const formatDuration = (duration) => {
+    if (!duration) return "N/A";
+    if (
+      typeof duration === "string" &&
+      duration.toLowerCase().includes("min")
+    ) {
+      return duration;
+    }
+    return `${duration} Min`;
   };
 
   return (
@@ -39,7 +62,9 @@ export default function InterviewCard({ interview, viewDetail = false }) {
 
       <h3 className="text-white font-semibold">{interview.jobPosition}</h3>
 
-      <p className="text-gray-400 text-sm mb-4">{interview.duration} Minutes</p>
+      <p className="text-gray-400 text-sm mb-4">
+        {formatDuration(interview.duration)}
+      </p>
 
       {viewDetail ? (
         <button

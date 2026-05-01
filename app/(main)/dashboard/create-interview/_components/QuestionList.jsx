@@ -33,12 +33,11 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { supabase } from "@/services/supabaseClient";
 
-function QuestionList({ formData, onCreateLink }) {
+function QuestionList({ formData, onCreateLink, userEmail }) {
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
   const [aiQuestions, setAiQuestions] = useState([]);
   const [customQuestions, setCustomQuestions] = useState([]);
-  const [difficulty, setDifficulty] = useState("Medium");
   const [saving, setSaving] = useState(false);
 
   const sensors = useSensors(
@@ -63,7 +62,6 @@ function QuestionList({ formData, onCreateLink }) {
         jobDescription: formData?.jobDescription,
         type: formData?.type || ["Technical"],
         duration: formData?.duration || "30 Min",
-        difficulty: difficulty,
       });
 
       const content = response.data.content;
@@ -168,6 +166,7 @@ function QuestionList({ formData, onCreateLink }) {
 
       const interviewData = {
         interview_id: id,
+        userEmail: userEmail || null,
         jobPosition: formData?.jobPosition || "",
         jobDescription: formData?.jobDescription || "",
         duration: formData?.duration || "30 Min",
@@ -177,7 +176,7 @@ function QuestionList({ formData, onCreateLink }) {
         questionList: JSON.stringify(questionList),
       };
 
-      console.log("Saving interview:", interviewData);
+      // console.log("Saving interview:", interviewData);
 
       // Insert without .select() to avoid fetching non-existent columns
       const { error } = await supabase
@@ -243,28 +242,6 @@ function QuestionList({ formData, onCreateLink }) {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            {/* DIFFICULTY SELECTOR */}
-            <div className="flex items-center gap-2 bg-white/5 rounded-lg p-1">
-              <span className="text-sm text-gray-400 px-2">Difficulty:</span>
-              {["Easy", "Medium", "Hard"].map((level) => (
-                <button
-                  key={level}
-                  onClick={() => setDifficulty(level)}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
-                    difficulty === level
-                      ? level === "Easy"
-                        ? "bg-green-600 text-white"
-                        : level === "Medium"
-                          ? "bg-yellow-600 text-white"
-                          : "bg-red-600 text-white"
-                      : "text-gray-400 hover:text-white"
-                  }`}
-                >
-                  {level}
-                </button>
-              ))}
-            </div>
-
             <Button
               onClick={generateQuestions}
               disabled={generating}
@@ -281,7 +258,7 @@ function QuestionList({ formData, onCreateLink }) {
             <Button
               variant="outline"
               onClick={copyAll}
-              className="border-white/20"
+              className="border-blue-400/50 text-blue-800 hover:bg-blue-600/20 hover:text-white"
             >
               <Copy className="mr-2 h-4 w-4" />
               Copy All

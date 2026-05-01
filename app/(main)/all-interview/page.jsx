@@ -15,16 +15,12 @@ function AllInterview() {
   const [dataLoading, setDataLoading] = useState(true);
   const { user, loading: userLoading } = useUser();
 
-  useEffect(() => {
-    GetInterviewList();
-  }, []);
-
   const GetInterviewList = useCallback(async () => {
     setDataLoading(true);
     let { data: Interviews, error } = await supabase
       .from("interviews")
       .select("*")
-      .order("id", { ascending: false });
+      .order("created_at", { ascending: false });
 
     if (error) {
       toast("Error fetching interviews: " + error.message);
@@ -33,6 +29,12 @@ function AllInterview() {
     setInterviewList(Interviews || []);
     setDataLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (!userLoading) {
+      GetInterviewList();
+    }
+  }, [userLoading, GetInterviewList]);
 
   if (userLoading || dataLoading) {
     return (

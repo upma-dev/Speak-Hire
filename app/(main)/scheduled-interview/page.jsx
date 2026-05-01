@@ -131,7 +131,7 @@ function ScheduledInterview() {
           </h2>
 
           <p className="text-gray-400 text-sm mt-1">
-            Once candidates complete interviews, feedback will appear here
+            Once candidates complete interviews, reports will appear here
           </p>
 
           <Button className="mt-4">Create Interview</Button>

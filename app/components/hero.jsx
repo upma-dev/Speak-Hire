@@ -7,7 +7,9 @@ import AuthModal from "@/app/components/AuthModal";
 const texts = [
   "AI Interviews That Hire Smarter",
   "Automate Hiring With AI",
-  "Find Better Candidates Faster",
+  "Find Better Candidates & Job Fast",
+  "Practice Interviews With AI",
+  "Read Candidate Experience &Questions",
 ];
 
 export default function Hero() {
@@ -63,8 +65,8 @@ export default function Hero() {
         transition={{ delay: 0.5 }}
         className="text-gray-400 mt-6 max-w-2xl mx-auto text-lg"
       >
-        Automate screening, evaluate candidates with AI insights, and streamline
-        hiring with intelligent interviews.
+        Automate, AI insights, streamline hiring, mock rounds, instant feedback,
+        build confidence.
       </motion.p>
 
       {/* 🔘 Buttons */}
@@ -77,7 +79,7 @@ export default function Hero() {
         </button>
 
         <button className="border border-white/20 px-7 py-3 rounded-xl hover:bg-white/10 transition">
-          Watch Demo
+          Watch Demo Below
         </button>
       </div>
 

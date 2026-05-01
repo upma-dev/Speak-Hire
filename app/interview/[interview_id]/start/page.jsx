@@ -10,11 +10,13 @@ import {
   VideoOff,
   Timer,
   Camera,
+  Bot,
 } from "lucide-react";
-import Image from "next/image";
 import Vapi from "@vapi-ai/web";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import axios from "axios";
+import { supabase } from "@/services/supabaseClient";
 
 import AlertConfirmation from "./_components/AlertConfirmation";
 import VoiceWave from "./_components/VoiceWave";
@@ -23,10 +25,12 @@ import { useTimer } from "./hooks/useTimer";
 export default function StartInterview() {
   const { interviewInfo } = useContext(InterviewDataContext);
   const router = useRouter();
+  const { interview_id } = useParams();
 
   const videoRef = useRef(null);
   const streamRef = useRef(null);
   const vapiRef = useRef(null);
+  const vapiActive = useRef(false);
 
   const reconnectAttempts = useRef(0);
 
@@ -63,11 +67,26 @@ export default function StartInterview() {
   const [paused, setPaused] = useState(false);
 
   ////////////////////////////////////////////////////////////
-  // VAPI INIT
+  // VAPI INIT with Krisp error suppression
   ////////////////////////////////////////////////////////////
+
+  // Suppress Krisp duplicate warnings (common in dev/hot reload)
+  const originalConsoleError = console.error;
+  console.error = (...args) => {
+    if (
+      typeof args[0] === "string" &&
+      (args[0].includes("KrispSDK") ||
+        args[0].includes("duplicated") ||
+        args[0].includes("SDK is only imported once"))
+    ) {
+      return; // Silently ignore Krisp duplicate warnings
+    }
+    originalConsoleError.apply(console, args);
+  };
 
   if (!vapiRef.current) {
     vapiRef.current = new Vapi(process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY);
+    vapiActive.current = false;
   }
 
   const vapi = vapiRef.current;
@@ -348,17 +367,26 @@ export default function StartInterview() {
         messages: [
           {
             role: "system",
-            content: "You are an AI interviewer. Ask questions one by one.",
+            content: `You are an AI interviewer. Ask the provided interview questions one by one, wait for candidate answer, then move to the next.
+
+Questions to ask in order:
+${interviewInfo?.interviewData?.questionList || "[]"}
+`,
           },
         ],
       },
     };
 
-    try {
-      vapi.start(assistant);
-    } catch (err) {
-      setConnectionError(true);
-      toast.error("Unable to connect to AI interviewer");
+    // Prevent duplicate starts
+    if (!vapiActive.current) {
+      vapiActive.current = true;
+      try {
+        vapi.start(assistant);
+      } catch (err) {
+        vapiActive.current = false;
+        setConnectionError(true);
+        toast.error("Unable to connect to AI interviewer");
+      }
     }
 
     ////////////////////////////////////////////////////////////
@@ -442,20 +470,26 @@ export default function StartInterview() {
 
         setTimeout(() => {
           try {
-            vapi.start(assistant);
+            if (!vapiActive.current) {
+              vapi.start(assistant);
+            }
           } catch {}
         }, 2000);
       } else {
         setConnectionError(true);
+        vapiActive.current = false;
 
         toast.error("Unable to reconnect to AI interviewer");
       }
     });
 
     return () => {
+      vapiActive.current = false;
       try {
         vapi.stop();
       } catch {}
+      // Restore original console.error
+      console.error = originalConsoleError;
     };
   }, [started]);
 
@@ -482,6 +516,36 @@ export default function StartInterview() {
     try {
       vapi.stop();
     } catch {}
+
+    try {
+      const transcriptText = conversation
+        .map((msg) => `${msg.role}: ${msg.content}`)
+        .join("\n");
+
+      if (transcriptText.trim()) {
+        const feedbackRes = await axios.post("/api/ai-feedback", {
+          conversation: transcriptText,
+        });
+
+        const raw = feedbackRes?.data?.content || "{}";
+        let parsedFeedback = raw;
+
+        try {
+          parsedFeedback = JSON.parse(raw.replace(/```json|```/g, "").trim());
+        } catch {}
+
+        await supabase.from("interview-feedback").insert([
+          {
+            interview_id,
+            userName: interviewInfo?.userName || "Candidate",
+            userEmail: interviewInfo?.userEmail || null,
+            feedback: parsedFeedback,
+          },
+        ]);
+      }
+    } catch (e) {
+      console.error("Failed to save interview feedback:", e);
+    }
 
     streamRef.current?.getTracks().forEach((t) => t.stop());
 
@@ -603,7 +667,9 @@ export default function StartInterview() {
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="bg-white/5 p-6 rounded-xl flex flex-col items-center">
-          <Image src="/avatar.png" width={100} height={100} alt="ai" />
+          <div className="w-24 h-24 rounded-full bg-blue-600/20 border border-blue-400/30 flex items-center justify-center">
+            <Bot className="w-12 h-12 text-blue-300" />
+          </div>
           <h2 className="mt-3">AI Recruiter</h2>
           <VoiceWave active={aiSpeaking} />
         </div>

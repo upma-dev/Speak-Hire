@@ -13,6 +13,7 @@ function InterviewDetail() {
   const { interview_id } = useParams();
   const { user } = useUser();
   const [interviewDetail, setInterviewDetail] = useState();
+  const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,9 +28,8 @@ function InterviewDetail() {
     const { data, error } = await supabase
       .from("interviews")
       .select(
-        `jobPosition,jobDescription,type,questionList,duration,interview_id,created_at,interview-feedback(userEmail,userName,feedback,created_at)`,
+        "jobPosition,jobDescription,type,questionList,duration,interview_id,created_at",
       )
-      // .eq("userEmail", user?.email)
       .eq("interview_id", interview_id);
 
     if (error) {
@@ -38,8 +38,20 @@ function InterviewDetail() {
       return;
     }
 
+    const { data: candidateRows, error: candidateError } = await supabase
+      .from("interview-feedback")
+      .select("userEmail,userName,feedback,created_at,interview_id")
+      .eq("interview_id", interview_id)
+      .order("created_at", { ascending: false });
+
+    if (candidateError) {
+      toast("Error fetching candidates: " + candidateError.message);
+      setCandidates([]);
+    } else {
+      setCandidates(candidateRows || []);
+    }
+
     setInterviewDetail(data?.[0]);
-    console.log("result", data);
     setLoading(false);
   };
 
@@ -63,11 +75,9 @@ function InterviewDetail() {
 
           <InterviewDetailContainer
             interviewDetail={interviewDetail}
-            candidates={interviewDetail?.["interview-feedback"]}
+            candidates={candidates}
           />
-          <CandidateList
-            candidateList={interviewDetail?.["interview-feedback"]}
-          />
+          <CandidateList candidateList={candidates} />
         </>
       )}
     </div>
