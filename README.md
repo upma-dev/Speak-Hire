@@ -4,12 +4,6 @@
 
 > **AI-Powered Interviews • Zero Hassle Hiring • Instant Insights**
 
-[![Next.js 15](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=next.js)](https://nextjs.org)
-[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
-[![Tailwind](https://img.shields.io/badge/TailwindCSS-3-38BDF8?style=for-the-badge&logo=tailwind)](https://tailwindcss.com)
-[![Supabase](https://img.shields.io/badge/Supabase-DB%2BAuth-3FCF99?style=for-the-badge&logo=supabase)](https://supabase.com)
-[![Vercel](https://img.shields.io/badge/Vercel-Deploy-000?style=for-the-badge&logo=vercel)](https://vercel.com)
-
 ## 🎯 **What is Speak-Hire?**
 
 **Speak-Hire** is your **all-in-one AI interview platform** that transforms traditional hiring into a seamless, insightful experience. 
@@ -19,12 +13,16 @@
 - Get eye-tracking, voice analysis, candidate ranking
 - Share one link - no scheduling hassles
 - Instant AI feedback scores
+- Browse 1000+ community interview experiences for better questions
+- Watch 2-min demo video to onboard your team instantly
 
 **For Candidates:**
 - Join via link (no account needed)
 - Natural voice conversation with AI interviewer
 - Real-time performance tracking
 - Complete in your preferred time
+- Share your interview experience to help fellow candidates
+- Watch demo video and browse real experiences by company
 
 ## ✨ **Why Choose Speak-Hire?** (Creative Edge)
 
@@ -37,14 +35,51 @@ Missed subtle cues       →   ML-powered insights
 Hours of review          →   Instant candidate ranking
 ```
 
-## 🚀 **Live Demo** 
-🌐 **[https://speak-hire.vercel.app/](https://speak-hire.vercel.app/)** *(Production Live!)*
+## 🌟 **Interview Experience Community**
 
-## 🔥 **Live Demo Features**
+**Discover real interview stories from candidates worldwide!** 👥
+
+Browse, search, and contribute to our growing database of authentic interview experiences:
+
+| Feature | Description |
+|---------|-------------|
+| 🔍 **Smart Search** | Filter by company, role, location |
+| 📊 **Live Stats** | Total experiences, companies, questions shared |
+| 💬 **Share Yours** | 5-step form: details, experience, questions + rating |
+| 📄 **PDF Export** | Download formatted experience reports |
+| ⭐ **Ratings** | 1-5 star feedback with detailed stories |
+| ❓ **Questions** | Actual questions asked in each round |
+
+> **Pro Tip:** Recruiters - mine real questions for your next interview!  
+> **Candidates** - prepare better knowing what to expect!
+
+[Live Experiences →](https://speak-hire.vercel.app/interview-experience)
+
+## 🎥 **Watch Demo & Live App**
+
+**See Speak-Hire in action!** 🚀
+
+🌐 **[Live App →](https://speak-hire.vercel.app/)** *(Production Ready!)*
+
+**📹 Demo Video** (2 mins):
+```
+Watch AI interviews with live eye-tracking, voice analysis,
+community experience sharing, and instant insights!
+```
+[Video on Site →](https://speak-hire.vercel.app/) *(Autoplay on homepage)*
+
+## 🔥 **Key Features Live**
 
 | Feature | Status | Cool Factor |
 |---------|--------|-------------|
-| 👁️ **Eye Contact Tracking** | ✅
+| 👁️ **Eye Contact Tracking** | ✅ Live | 🔥🔥🔥 |
+| 🎤 **Voice Analysis** | ✅ Live | 🔥🔥 |
+| 👥 **Interview Experiences** | ✅ Community | 🔥🔥🔥 |
+| 📱 **Mobile Responsive** | ✅ Perfect | 🔥 |
+| 💰 **Payments (Razorpay)** | ✅ India Ready | 🔥🔥 |
+| 📊 **Candidate Ranking** | ✅ AI Scores | 🔥🔥🔥 |
+| 🎬 **Demo Video** | ✅ Autoplay | 🔥 |
+| 🔐 **Google Auth** | ✅ 1-Click | 🔥 |
 
 ## 🛠️ **One-Click Setup** (Normal User Friendly)
 
@@ -69,7 +104,7 @@ npm run dev
 ### .env.local Template
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=.......
 NEXT_PUBLIC_HOST_URL=http://localhost:3000
 ```
 
@@ -119,7 +154,7 @@ Payments
 ## 🚀 **Production Ready**
 
 ```
-✅ TypeScript + ESLint
+✅ JavaScript + ESLint
 ✅ SEO Meta (dynamic titles)
 ✅ PWA Ready (manifest)
 ✅ Internationalization ready
@@ -145,16 +180,6 @@ Feedback: interview_id → JSON insights (sentiment, gaze, score)
 4. AI Interview (10 mins) → Live tracking
 5. Instant Feedback → Ranking + insights
 6. Dashboard → All interviews analytics
-```
-
-## 🧪 **Recent BlackboxAI Enhancements**
-
-```
-🔧 Fixed Next/Image Supabase hosting error
-🗑️ Removed privacy-concern avatar from dashboard
-⚡ Added smooth loading skeletons (4 pages)
-📱 Enhanced mobile sidebar UX
-📖 This impressive README!
 ```
 
 ## 🌟 **Demo Video Script**
