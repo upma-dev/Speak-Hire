@@ -28,7 +28,7 @@ export default function WatchDemo() {
         >
           <video
             className="w-full h-full object-cover"
-            src="/video.1.mp4"
+            src="https://res.cloudinary.com/dqouskp7s/video/upload/v1777652873/Screen_Recording_2026-05-01_192354_fg75m0.mp4"
             autoPlay
             muted
             loop

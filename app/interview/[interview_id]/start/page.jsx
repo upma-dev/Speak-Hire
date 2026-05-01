@@ -667,8 +667,12 @@ ${interviewInfo?.interviewData?.questionList || "[]"}
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="bg-white/5 p-6 rounded-xl flex flex-col items-center">
-          <div className="w-24 h-24 rounded-full bg-blue-600/20 border border-blue-400/30 flex items-center justify-center">
-            <Bot className="w-12 h-12 text-blue-300" />
+          <div className="w-24 h-24 rounded-full overflow-hidden border border-blue-400/50 shadow-2xl">
+            <img
+              src="https://res.cloudinary.com/dqouskp7s/image/upload/v1777650078/ai_a6cmpd.jpg"
+              alt="AI Recruiter"
+              className="w-full h-full object-cover"
+            />
           </div>
           <h2 className="mt-3">AI Recruiter</h2>
           <VoiceWave active={aiSpeaking} />
